@@ -1,0 +1,44 @@
+{
+  "name": "deck-of-many",
+  "version": "1.0.0",
+  "private": true,
+  "description": "deck-of-many",
+  "author": "Tabatha Zeitke",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@fontsource/cherry-cream-soda": "^4.5.5",
+    "@fontsource/gayathri": "^4.5.6",
+    "@fontsource/junge": "^4.5.7",
+    "@fontsource/truculenta": "^4.5.7",
+    "@fontsource/yesteryear": "^4.5.9",
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "gatsby": "^4.10.1",
+    "gatsby-plugin-emotion": "^7.17.0",
+    "gatsby-plugin-mdx": "^3.17.0",
+    "gatsby-source-filesystem": "^4.17.0",
+    "gatsby-source-sanity": "^6.0.4",
+    "mersenne-twister": "^1.1.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.45",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "typescript": "^4.7.4"
+  }
+}
