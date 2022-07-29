@@ -23,6 +23,7 @@ type Scalars = {
   Float: number;
   /** A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: string;
+  GatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: Record<string, unknown>;
 };
@@ -754,6 +755,32 @@ type FloatQueryOperatorInput = {
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']>>>;
 };
 
+type GatsbyImageDataQueryOperatorInput = {
+  readonly eq: InputMaybe<Scalars['GatsbyImageData']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['GatsbyImageData']>>>;
+  readonly ne: InputMaybe<Scalars['GatsbyImageData']>;
+  readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['GatsbyImageData']>>>;
+};
+
+type GatsbyImageFormat =
+  | 'auto'
+  | 'avif'
+  | 'jpg'
+  | ''
+  | 'png'
+  | 'webp';
+
+type GatsbyImageLayout =
+  | 'constrained'
+  | 'fixed'
+  | 'fullWidth';
+
+type GatsbyImagePlaceholder =
+  | 'blurred'
+  | 'dominantColor'
+  | 'none'
+  | 'tracedSVG';
+
 type HeadingsMdx =
   | 'h1'
   | 'h2'
@@ -1394,8 +1421,7 @@ type Query_sanityImageAssetArgs = {
   children: InputMaybe<NodeFilterListInput>;
   description: InputMaybe<StringQueryOperatorInput>;
   extension: InputMaybe<StringQueryOperatorInput>;
-  fixed: InputMaybe<SanityImageFixedFilterInput>;
-  fluid: InputMaybe<SanityImageFluidFilterInput>;
+  gatsbyImageData: InputMaybe<GatsbyImageDataQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
   label: InputMaybe<StringQueryOperatorInput>;
@@ -1677,20 +1703,7 @@ type SanityCardFieldsEnum =
   | 'image.asset.children.id'
   | 'image.asset.description'
   | 'image.asset.extension'
-  | 'image.asset.fixed.base64'
-  | 'image.asset.fixed.height'
-  | 'image.asset.fixed.src'
-  | 'image.asset.fixed.srcSet'
-  | 'image.asset.fixed.srcSetWebp'
-  | 'image.asset.fixed.srcWebp'
-  | 'image.asset.fixed.width'
-  | 'image.asset.fluid.aspectRatio'
-  | 'image.asset.fluid.base64'
-  | 'image.asset.fluid.sizes'
-  | 'image.asset.fluid.src'
-  | 'image.asset.fluid.srcSet'
-  | 'image.asset.fluid.srcSetWebp'
-  | 'image.asset.fluid.srcWebp'
+  | 'image.asset.gatsbyImageData'
   | 'image.asset.id'
   | 'image.asset.internal.content'
   | 'image.asset.internal.contentDigest'
@@ -2153,6 +2166,11 @@ type SanityFileAssetSortInput = {
   readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
 };
 
+type SanityGatsbyImagePlaceholder =
+  | 'blurred'
+  | 'dominantColor'
+  | 'none';
+
 type SanityGeopoint = {
   readonly _key: Maybe<Scalars['String']>;
   readonly _type: Maybe<Scalars['String']>;
@@ -2209,8 +2227,7 @@ type SanityImageAsset = Node & SanityDocument & {
   readonly children: ReadonlyArray<Node>;
   readonly description: Maybe<Scalars['String']>;
   readonly extension: Maybe<Scalars['String']>;
-  readonly fixed: Maybe<SanityImageFixed>;
-  readonly fluid: Maybe<SanityImageFluid>;
+  readonly gatsbyImageData: Scalars['GatsbyImageData'];
   readonly id: Scalars['ID'];
   readonly internal: Internal;
   readonly label: Maybe<Scalars['String']>;
@@ -2254,18 +2271,18 @@ type SanityImageAsset__updatedAtArgs = {
 };
 
 
-type SanityImageAsset_fixedArgs = {
+type SanityImageAsset_gatsbyImageDataArgs = {
+  aspectRatio: InputMaybe<Scalars['Float']>;
+  backgroundColor: InputMaybe<Scalars['String']>;
+  breakpoints: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']>>>;
+  fit?: InputMaybe<SanityImageFit>;
+  formats?: InputMaybe<ReadonlyArray<InputMaybe<GatsbyImageFormat>>>;
   height: InputMaybe<Scalars['Int']>;
-  toFormat?: InputMaybe<SanityImageFormat>;
-  width?: InputMaybe<Scalars['Int']>;
-};
-
-
-type SanityImageAsset_fluidArgs = {
-  maxHeight: InputMaybe<Scalars['Int']>;
-  maxWidth?: InputMaybe<Scalars['Int']>;
+  layout: InputMaybe<GatsbyImageLayout>;
+  outputPixelDensities: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']>>>;
+  placeholder?: InputMaybe<SanityGatsbyImagePlaceholder>;
   sizes: InputMaybe<Scalars['String']>;
-  toFormat?: InputMaybe<SanityImageFormat>;
+  width: InputMaybe<Scalars['Int']>;
 };
 
 type SanityImageAssetConnection = {
@@ -2365,20 +2382,7 @@ type SanityImageAssetFieldsEnum =
   | 'children.parent.parent.id'
   | 'description'
   | 'extension'
-  | 'fixed.base64'
-  | 'fixed.height'
-  | 'fixed.src'
-  | 'fixed.srcSet'
-  | 'fixed.srcSetWebp'
-  | 'fixed.srcWebp'
-  | 'fixed.width'
-  | 'fluid.aspectRatio'
-  | 'fluid.base64'
-  | 'fluid.sizes'
-  | 'fluid.src'
-  | 'fluid.srcSet'
-  | 'fluid.srcSetWebp'
-  | 'fluid.srcWebp'
+  | 'gatsbyImageData'
   | 'id'
   | 'internal.content'
   | 'internal.contentDigest'
@@ -2525,8 +2529,7 @@ type SanityImageAssetFilterInput = {
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly extension: InputMaybe<StringQueryOperatorInput>;
-  readonly fixed: InputMaybe<SanityImageFixedFilterInput>;
-  readonly fluid: InputMaybe<SanityImageFluidFilterInput>;
+  readonly gatsbyImageData: InputMaybe<GatsbyImageDataQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
   readonly label: InputMaybe<StringQueryOperatorInput>;
@@ -2634,51 +2637,14 @@ type SanityImageFilterInput = {
   readonly hotspot: InputMaybe<SanityImageHotspotFilterInput>;
 };
 
-type SanityImageFixed = {
-  readonly base64: Maybe<Scalars['String']>;
-  readonly height: Scalars['Float'];
-  readonly src: Scalars['String'];
-  readonly srcSet: Scalars['String'];
-  readonly srcSetWebp: Maybe<Scalars['String']>;
-  readonly srcWebp: Maybe<Scalars['String']>;
-  readonly width: Scalars['Float'];
-};
-
-type SanityImageFixedFilterInput = {
-  readonly base64: InputMaybe<StringQueryOperatorInput>;
-  readonly height: InputMaybe<FloatQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSet: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSetWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly srcWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly width: InputMaybe<FloatQueryOperatorInput>;
-};
-
-type SanityImageFluid = {
-  readonly aspectRatio: Scalars['Float'];
-  readonly base64: Maybe<Scalars['String']>;
-  readonly sizes: Scalars['String'];
-  readonly src: Scalars['String'];
-  readonly srcSet: Scalars['String'];
-  readonly srcSetWebp: Maybe<Scalars['String']>;
-  readonly srcWebp: Maybe<Scalars['String']>;
-};
-
-type SanityImageFluidFilterInput = {
-  readonly aspectRatio: InputMaybe<FloatQueryOperatorInput>;
-  readonly base64: InputMaybe<StringQueryOperatorInput>;
-  readonly sizes: InputMaybe<StringQueryOperatorInput>;
-  readonly src: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSet: InputMaybe<StringQueryOperatorInput>;
-  readonly srcSetWebp: InputMaybe<StringQueryOperatorInput>;
-  readonly srcWebp: InputMaybe<StringQueryOperatorInput>;
-};
-
-type SanityImageFormat =
-  | 'jpg'
-  | ''
-  | 'png'
-  | 'webp';
+type SanityImageFit =
+  | 'clip'
+  | 'crop'
+  | 'fill'
+  | 'fillmax'
+  | 'max'
+  | 'min'
+  | 'scale';
 
 type SanityImageHotspot = {
   readonly _key: Maybe<Scalars['String']>;
@@ -4022,23 +3988,7 @@ type StringQueryOperatorInput = {
 type AllCardQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type AllCardQueryQuery = { readonly allSanityCard: { readonly allCards: ReadonlyArray<{ readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly image: { readonly asset: { readonly url: string | null, readonly fluid: { readonly base64: string | null, readonly srcWebp: string | null, readonly srcSetWebp: string | null } | null } | null } | null, readonly slug: { readonly current: string | null } | null }> }, readonly cardBack: { readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly slug: { readonly current: string | null } | null, readonly image: { readonly asset: { readonly fluid: { readonly srcWebp: string | null } | null } | null } | null } | null };
-
-type GatsbySanityImageFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbySanityImageFixed_noBase64Fragment = { readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbySanityImageFixed_withWebpFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbySanityImageFixed_withWebp_noBase64Fragment = { readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null };
-
-type GatsbySanityImageFluidFragment = { readonly base64: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbySanityImageFluid_noBase64Fragment = { readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbySanityImageFluid_withWebpFragment = { readonly base64: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
-
-type GatsbySanityImageFluid_withWebp_noBase64Fragment = { readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
+type AllCardQueryQuery = { readonly allSanityCard: { readonly allCards: ReadonlyArray<{ readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly slug: { readonly current: string | null } | null }> }, readonly cardBack: { readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly slug: { readonly current: string | null } | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
 
 
 }

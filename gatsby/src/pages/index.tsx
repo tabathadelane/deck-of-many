@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import styled from "@emotion/styled"
 import { graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
 var MersenneTwister = require('mersenne-twister');
 import { css, Global } from "@emotion/react";
 import stars from  "../images/stars2.png"
@@ -65,40 +66,46 @@ const SubTitleStyles = styled("h1")`
   text-align: center;
   padding-bottom: 50px !important;
   `
-  const RandomCardStyles = styled("div")`
+const RandomCardStyles = styled("div")`
   text-align: center;
   display: flex;
   margin-top: 40px;
   align-items: flex-start;
   justify-content: space-evenly;
   `
-  const CardNameStyles = styled("h1")`
+const CardNameStyles = styled("h1")`
   font-family: var(--header-font);
   margin-top: 20px !important;
   text-align: center;
   height: 40px;
   `
-  const CardImgStyles = styled("img")`
-  height: 460px;
-  width: 325px;
-  border-radius: var(--rounded-edges);
-  box-shadow: 4px 7px 4px -2px rgba(0, 0, 0, 0.5);
-  
+const CardImgStyles = styled("div")`
+  img {
+    height: 460px;
+    width: 325px;
+    border-radius: var(--rounded-edges);
+    box-shadow: 4px 7px 4px -2px rgba(0, 0, 0, 0.5);
+
+  }
+height: 460px;
+width: 325px;
+border-radius: var(--rounded-edges);
+box-shadow: 4px 7px 4px -2px rgba(0, 0, 0, 0.5);
   `
-  const InfoCardStyles = styled("div")`
+const InfoCardStyles = styled("div")`
   height: 430px;
   width: 295px;
   border-radius: var(--rounded-edges);
   box-shadow: 4px 7px 4px -2px rgba(0, 0, 0, 0.5);
  
   `
-  const CardEffectStyles = styled("p")`
+const CardEffectStyles = styled("p")`
   font-family: var(--text-font);
   height: 240px;
   margin: 20px auto 0;
   padding: 0 15px;
   `
-  const ButtonStyles = styled("button")`
+const ButtonStyles = styled("button")`
   background-color: var(--golden);
   color: white;
   border-radius: 12px;
@@ -110,7 +117,7 @@ const SubTitleStyles = styled("h1")`
   margin: 40px auto 0;
   z-index: 2;
 `
-  const LuckyStyles = styled("p")`
+const LuckyStyles = styled("p")`
   color: white;
   font-family: var(--lucky-font);
   font-size: 64px;
@@ -189,7 +196,9 @@ const DeckOfMany = ({data} :QueryTypes) => {
       {isDrawingCards && (
         <RandomCardStyles>
                     <div>
-            <CardImgStyles  key={randomCard.slug + " image"} src={randomCard.image?.asset?.fluid?.srcWebp} />
+            <CardImgStyles>
+            <GatsbyImage alt={randomCard.slug + " image"} image={randomCard.image?.asset?.gatsbyImageData} />
+              </CardImgStyles>  
           </div>
 
           <InfoCardStyles
@@ -233,7 +242,10 @@ const DeckOfMany = ({data} :QueryTypes) => {
               left:0;
               z-index: 1;`} 
             >
-              <CardImgStyles  key="default card back image" src={cardBack.image?.asset?.fluid?.srcWebp} />
+              <CardImgStyles>
+                <GatsbyImage
+                  alt="default card back image" image={cardBack.image?.asset?.gatsbyImageData} />
+              </CardImgStyles>  
             </div>
           </InfoCardStyles>
 
@@ -246,8 +258,8 @@ const DeckOfMany = ({data} :QueryTypes) => {
               opacity: 1;
               border: 15px solid #0C100B;
               position: relative;
-              `}>
-                <div css={css`
+            `}>
+              <div css={css`
                 position: absolute;
                 margin: 0 auto;
                 top:20;
@@ -272,7 +284,9 @@ const DeckOfMany = ({data} :QueryTypes) => {
             </InfoCardStyles>
           </InfoCardStyles>
           <div>
-            <CardImgStyles  key="default card back image" src={cardBack.image?.asset?.fluid?.srcWebp} />
+            <CardImgStyles>
+              <GatsbyImage alt="default card back image" image={cardBack.image?.asset?.gatsbyImageData} />
+            </CardImgStyles>  
           </div>
 
         </RandomCardStyles>
@@ -303,20 +317,20 @@ export const query = graphql`
         disappears
         cardEffect
         image {
-          asset {
-            url
-            fluid(maxWidth: 500) {
-              base64
-              srcWebp
-              srcSetWebp
-          }
+        asset {
+          id
+          gatsbyImageData(
+          width: 350
+          formats: WEBP
+          placeholder: BLURRED
+          outputPixelDensities: 0.25
+        )          }
+        }
+        slug {
+          current
         }
       }
-      slug {
-        current
-      }
     }
-  }
   cardBack: sanityCard(slug: {current: {eq: "card-back"}}) {
     slug {
       current
@@ -324,10 +338,13 @@ export const query = graphql`
     name
     image {
       asset {
-        fluid(maxWidth: 500) {
-          srcWebp
-        }
-      }
+        id
+        gatsbyImageData(
+          width: 350
+          formats: WEBP
+          placeholder: BLURRED
+          outputPixelDensities: 0.25
+        )      }
     }
     disappears
     cardEffect
