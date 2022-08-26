@@ -3988,7 +3988,7 @@ type StringQueryOperatorInput = {
 type AllCardQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type AllCardQueryQuery = { readonly allSanityCard: { readonly allCards: ReadonlyArray<{ readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly slug: { readonly current: string | null } | null }> }, readonly cardBack: { readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly slug: { readonly current: string | null } | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
+type AllCardQueryQuery = { readonly allSanityCard: { readonly allCards: ReadonlyArray<{ readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly slug: { readonly current: string | null } | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null }> }, readonly cardBack: { readonly name: string | null, readonly disappears: boolean | null, readonly cardEffect: string | null, readonly slug: { readonly current: string | null } | null, readonly image: { readonly asset: { readonly id: string, readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
 
 
 }

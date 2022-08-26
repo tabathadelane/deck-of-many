@@ -7,12 +7,13 @@
   },
   // These are all my auto-save configs
   "editor.formatOnSave": true,
+  "editor.wordWrapColumn": 20
   // turn it off for JS and JSX, we will do this via eslint
   "[typescriptreact]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
   },
   "[typescript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
   },
   // tell the ESLint plugin to run on save
   "editor.codeActionsOnSave": {
@@ -27,6 +28,5 @@
     "Waterdeep"
   ],
   "[mdx]": {
-    "editor.wordWrapColumn": 20
   }
 }
